@@ -83,4 +83,36 @@ public class Board {
         }
     }
 
+    public char[][] getBoard() {
+        return board;
+    }
+
+    public static char getGOOSE() {
+        return GOOSE;
+    }
+
+    public static char getFOX() {
+        return FOX;
+    }
+
+    public static char getFREE() {
+        return FREE;
+    }
+
+    public static char getINVALID() {
+        return INVALID;
+    }
+
+    public void makeMove(int x1, int y1, int x2, int y2, boolean goose) {
+        board[x1][y1] = FREE;
+        if(goose){
+            board[x2][y2] = GOOSE;
+        }
+        else{
+            board[x2][y2] = FOX;
+        }
+    }
+    public void eatGoose(int x, int y){
+        board[x][y] = FREE;
+    }
 }

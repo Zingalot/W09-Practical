@@ -1,6 +1,7 @@
 public class Game {
 
     // The following five constants were defined in the starter code (kt54)
+    private static boolean GOOSE_TURN       = true;
     private static String FOXPLAYS_MSG      = "Fox plays. Enter move:";
     private static String GEESEPLAY_MSG     = "Geese play. Enter move:";
     private static String ILLEGALMOVE_MSG   = "Illegal move!";
@@ -14,29 +15,105 @@ public class Game {
         gameBoard = new Board();
     }
 
+
     // Build on this method to implement game logic.
     public void play() {
 
         EasyIn2 reader = new EasyIn2();
 
-        gameBoard = new Board();
+        Board gameBoard = new Board();
 
         boolean done = false;
+
 
         while(!done) {
             gameBoard.printBoard();
 
-            System.out.println(GEESEPLAY_MSG);
-
+            System.out.println("Enter the co-ordinates");
             int x1 = reader.getInt();
             int y1 = reader.getInt();
             int x2 = reader.getInt();
             int y2 = reader.getInt();
+            //ensuring that the move is within one tile
+            int validMove = Math.abs((x2-x1)+(y2-y1));
+
+
+            //Goose turn
+            if(GOOSE_TURN == true && gameBoard.getBoard()[x1][y1] == gameBoard.getGOOSE()) {
+                switch (validMove) {
+                    //The goose is moving vertically or horizontally
+                    case 1:
+                        if (gameBoard.getBoard()[x2][y2] == gameBoard.getFREE()) {
+                            gameBoard.makeMove(x1, y1, x2, y2, GOOSE_TURN);
+                            GOOSE_TURN = false;
+                            break;
+                        }
+                        else{System.out.println(ILLEGALMOVE_MSG);}
+                    //The goose is moving diagonally
+                    case 2:
+                        if (gameBoard.getBoard()[x2][y2] == gameBoard.getFREE() && (x2 - x1) == (y2 - y1)) {
+                            gameBoard.makeMove(x1, y1, x2, y2, GOOSE_TURN);
+                            GOOSE_TURN = false;
+                        }
+                        else{System.out.println(ILLEGALMOVE_MSG);}
+                        break;
+                    //The goose is moving illegally
+                    default:
+                        System.out.print(ILLEGALMOVE_MSG);
+                        break;
+                }
+            }
+
+            //Fox turn
+            if(GOOSE_TURN == false && gameBoard.getBoard()[x1][y1] == gameBoard.getFOX()) {
+                switch (validMove) {
+                    //The fox is moving normally vertically or horizontally
+                    case 1:
+                        if (gameBoard.getBoard()[x2][y2] == gameBoard.getFREE()) {
+                            gameBoard.makeMove(x1, y1, x2, y2, GOOSE_TURN);
+                            GOOSE_TURN = true;
+                            break;
+                        }
+                        else{System.out.println(ILLEGALMOVE_MSG);}
+
+                    case 2:
+                        if (gameBoard.getBoard()[x2][y2] == gameBoard.getFREE() && (x2 - x1) == (y2 - y1))/*The fox is moving normally diagonally*/ {
+                            gameBoard.makeMove(x1, y1, x2, y2, GOOSE_TURN);
+                            GOOSE_TURN = true;
+                        }
+                        else {//The fox is jumping vertically or horizontally over a goose
+                            if (gameBoard.getBoard()[x2][y2] == gameBoard.getFREE() && ((x2 - x1) != (y2 - y1))
+                                    && gameBoard.getBoard()[x1+(x2-x1)/2][y1+(y2-y1)/2] == gameBoard.getGOOSE()) {
+                                gameBoard.makeMove(x1, y1, x2, y2, GOOSE_TURN);
+                                gameBoard.eatGoose(x1+(x2-x1)/2, y1+(y2-y1)/2);
+                                GOOSE_TURN = true;
+                            }
+                            else {
+                                System.out.println(ILLEGALMOVE_MSG);
+                            }
+                        }
+                        break;
+                    //The fox is jumping over a goose diagonally
+                    case 4:
+                        if (gameBoard.getBoard()[x2][y2] == gameBoard.getFREE() && ((x2 - x1) == (y2 - y1)) && gameBoard.getBoard()[x1+(x2-x1)/2][y1+(y2-y1)/2] == gameBoard.getGOOSE()) {
+                            gameBoard.makeMove(x1, y1, x2, y2, GOOSE_TURN);
+                            gameBoard.eatGoose(x1+(x2-x1)/2, y1+(y2-y1)/2);
+                            GOOSE_TURN = true;
+                        }
+                        else{System.out.println(ILLEGALMOVE_MSG);}
+                        break;
+                    default:
+                        System.out.print(ILLEGALMOVE_MSG);
+                        break;
+                }
+            }
+
+
 
             // This is just demonstration code, so we immediately let geese win
             // to avoid unnecessary violence.
-            System.out.println(GEESEWIN_MSG);
-            done = true;
+            //System.out.println(GEESEWIN_MSG);
+            //done = true;
         }
     }
 }
