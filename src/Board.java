@@ -38,7 +38,8 @@ public class Board {
         invalid2x2Square(MAX_INDEX - 1 , MAX_INDEX - 1);
 
         // Put a single fox in the starting position
-        board[boardsize/2][(boardsize+3)/2] = FOX;
+        board[3][4] = FREE;
+        board[boardsize/2][(boardsize+(boardsize/2))/2] = FOX;
 
         //Put geese in starting positions
         for(int i = MIN_INDEX; i <= MAX_INDEX; i++){
@@ -103,13 +104,24 @@ public class Board {
         return INVALID;
     }
 
+    public static int getMaxIndex() {
+        return MAX_INDEX;
+    }
+
+    public static int getMinIndex() {
+        return MIN_INDEX;
+    }
+
     public void makeMove(int x1, int y1, int x2, int y2, boolean goose) {
         board[x1][y1] = FREE;
+        System.out.println(board[x1][y1]);
+        System.out.println("HELLO");
         if(goose){
             board[x2][y2] = GOOSE;
         }
         else{
             board[x2][y2] = FOX;
+            printBoard();
         }
     }
     public void eatGoose(int x, int y){
