@@ -85,7 +85,7 @@ public class Board {
     }
 
     public char[][] getBoard() {
-        return board;
+        return this.board;
     }
 
     public static char getGOOSE() {
@@ -114,14 +114,11 @@ public class Board {
 
     public void makeMove(int x1, int y1, int x2, int y2, boolean goose) {
         board[x1][y1] = FREE;
-        System.out.println(board[x1][y1]);
-        System.out.println("HELLO");
         if(goose){
             board[x2][y2] = GOOSE;
         }
         else{
             board[x2][y2] = FOX;
-            printBoard();
         }
     }
     public void eatGoose(int x, int y){
