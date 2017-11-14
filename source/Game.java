@@ -58,9 +58,10 @@ public class Game {
                         gooseMove(x1, x2, y1, y2);
                         gooseJustPlayed = true;
                         findFox();
+                        validFoxMove = false;
                         for (int i = Math.max(xFox - 2, gameBoard.getMinIndex()); i <= Math.min(xFox + 2, gameBoard.getMaxIndex()); i++) {
                             for (int j = Math.max(yFox - 2, gameBoard.getMinIndex()); j <= Math.min(yFox + 2, gameBoard.getMaxIndex()); j++) {
-                                testFoxMoves(x1, y1, i, j);
+                                testFoxMoves(xFox, yFox, i, j);
                             }
                         }
                         if (!validFoxMove) {
@@ -182,7 +183,6 @@ public class Game {
     }
 
     public void testFoxMoves(int x1, int y1, int x2, int y2){
-        validFoxMove = false;
         int validMove = Math.abs(x2-x1)+Math.abs(y2-y1);
         switch (validMove) {
             //The fox is moving normally vertically or horizontally
