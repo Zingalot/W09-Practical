@@ -48,6 +48,7 @@ public class Game {
             int x2 = reader.getInt();
             int y2 = reader.getInt();
 
+            
 
             //Goose turn
             if(GOOSE_TURN == true && gameBoard.getBoard()[x1][y1] == gameBoard.getGOOSE()) {

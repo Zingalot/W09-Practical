@@ -117,6 +117,7 @@ public class EasyIn2 {
         return d;
     }
 
+
     public  float getFloat() {
         float f = 0;
         boolean ok = false;

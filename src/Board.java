@@ -18,6 +18,7 @@ public class Board {
         board[x][y+1] = INVALID;
         board[x+1][y] = INVALID;
         board[x+1][y+1] = INVALID;
+
     }
 
     // Default constructor was provided by the starter code. Extend as needed (kt54)
