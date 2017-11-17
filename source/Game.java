@@ -240,6 +240,7 @@ public class Game {
         }
     }
 
+    //Parts of this method are the same as those in foxMove, see comments there if needed.
     public void gooseMove (int x1, int x2, int y1, int y2){
         int validMove = Math.abs(x2-x1)+Math.abs(y2-y1);
         switch (validMove) {
@@ -270,6 +271,8 @@ public class Game {
         }
     }
 
+    //Same method as foxMove, only changes are ensuring that instead of changing the board, validFoxMove is set to true
+    //to show that the fox can still move, and thus the geese have not won.
     public void testFoxMoves(int x1, int y1, int x2, int y2){
         int validMove = Math.abs(x2-x1)+Math.abs(y2-y1);
         switch (validMove) {
@@ -302,6 +305,7 @@ public class Game {
         }
     }
 
+    //Loops through the whole board to find the location of the fox, updates the relevant variables
     public void findFox(){
         for(int i = gameBoard.getMinIndex(); i <= gameBoard.getMaxIndex(); i++){
             for(int j = gameBoard.getMinIndex(); j <= gameBoard.getMaxIndex(); j++){
@@ -312,6 +316,9 @@ public class Game {
             }
         }
     }
+
+    //Checks to see if the fox has won by looping through the whole board and assigning foxWin to false if a goose
+    //is found. If foxWin is not set to false by this function, the fox has won.
     public boolean checkFoxWin(){
         boolean foxWin = true;
         for( int i = gameBoard.getMinIndex(); i <= gameBoard.getMaxIndex(); i++){
@@ -323,6 +330,9 @@ public class Game {
         }
         return foxWin;
     }
+
+    //Checks that the user input for the move is between the min and max index of the array.
+    //Needs to be done separately to avoid outOfBoundsExceptions on the main array.
     public boolean checkInput(int x1,int x2, int y1, int y2){
         boolean validInput = true;
         if(gameBoard.getMinIndex() > x1 || x1 > gameBoard.getMaxIndex()){

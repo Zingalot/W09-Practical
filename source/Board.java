@@ -51,6 +51,7 @@ public class Board {
             for(int j = MIN_INDEX; j <= MAX_INDEX/2; j++){
                 if(board[i][j] == FREE) {
                     board[i][j] = GOOSE;
+                    //Replaces geese with free squares in the centre of the board, halfway down
                     //not sure how to avoid "magic constants" here
                     if(j == MAX_INDEX/2 && (i == 2 || i == 3 || i == 4)){
                         board[i][j] = FREE;
@@ -89,6 +90,7 @@ public class Board {
         }
     }
 
+    //Getters in order to pass private variables to other classes
     public char[][] getBoard() {
         return this.board;
     }
@@ -113,6 +115,7 @@ public class Board {
         return MIN_INDEX;
     }
 
+    //Edits the board to reflect a move being made. All checking is done before this point
     public void makeMove(int x1, int y1, int x2, int y2, boolean goose) {
         board[x1][y1] = FREE;
         if(goose){
