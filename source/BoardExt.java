@@ -1,13 +1,14 @@
 public class BoardExt {
 
     // The following five constants were defined in the starter code (kt54)
-    private static final int  DEFAULT_SIZE = 7;
+    private static final int  DEFAULT_SIZE = 6;
     private static final char FREE    = '.';
     private static final char INVALID = ' ';
     private static final char FOX     = '*';
     private static final char GOOSE   = 'o';
     private static final int  MIN_INDEX = 0;
     private static final int  MAX_INDEX = DEFAULT_SIZE-1;
+    private static final int  THIRD_OF_BOARD = DEFAULT_SIZE/3;
 
 
     private int boardsize;
@@ -35,10 +36,14 @@ public class BoardExt {
         board = new char[boardsize][boardsize];
 
         // Clear all playable fields
-        for(int x=0; x<boardsize; x++)
-            for(int y=0; y<boardsize; y++)
+        for(int x=0; x<boardsize; x++) {
+            for (int y = 0; y < boardsize; y++) {
                 board[x][y] = FREE;
-
+                if((x < THIRD_OF_BOARD || x >= boardsize-THIRD_OF_BOARD) && (y < THIRD_OF_BOARD || y >= boardsize-THIRD_OF_BOARD)){
+                    board[x][y] = INVALID;
+                }
+            }
+        }
         /*Fill all playable fields with geese to check geese win condition
         for(int x=0; x<boardsize; x++)
             for(int y=0; y<boardsize; y++)
@@ -51,7 +56,7 @@ public class BoardExt {
         invalid2x2Square(MAX_INDEX - 1 , MAX_INDEX - 1);*/
 
         //Replace corners with invalid 3x3 squares
-        invalid3x3Square(MIN_INDEX);
+
 
         // Put a single fox in the starting position
         board[3][4] = FREE;
@@ -63,7 +68,8 @@ public class BoardExt {
                 if(board[i][j] == FREE) {
                     board[i][j] = GOOSE;
                     //not sure how to avoid "magic constants" here
-                    if(j == MAX_INDEX/2 && (i == 2 || i == 3 || i == 4)){
+
+                    if(j == MAX_INDEX/2 && i >= THIRD_OF_BOARD && i < boardsize-THIRD_OF_BOARD){
                         board[i][j] = FREE;
                     }
 

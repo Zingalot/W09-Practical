@@ -105,10 +105,6 @@ public class Board {
         return FREE;
     }
 
-    public static char getINVALID() {
-        return INVALID;
-    }
-
     public static int getMaxIndex() {
         return MAX_INDEX;
     }

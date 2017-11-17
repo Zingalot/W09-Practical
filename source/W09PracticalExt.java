@@ -5,10 +5,9 @@ public class W09PracticalExt {
         //Below should be the final code to run the game
         //Commented out for testing
         //Directories named for github
-        Game game = new Game();
+        GameExt game = new GameExt();
 
         game.play();
-
 
     }
 
